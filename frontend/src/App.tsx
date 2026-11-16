@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
+import { NavLink, Route, Routes } from 'react-router-dom'
 
 import Overview from './views/Overview'
 import RealtimemetricView from './views/realtimemetric'
@@ -32,9 +32,14 @@ export default function App() {
         <h1 className="app-title">实时指标计算与监控大盘平台</h1>
         <nav className="nav-list">
           {navItems.map((item) => (
-            <Link key={item.path} to={item.path} className="nav-item">
+            <NavLink
+              key={item.path}
+              to={item.path}
+              end={item.path === '/'}
+              className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
+            >
               {item.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
       </aside>

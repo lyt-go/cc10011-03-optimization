@@ -13,6 +13,11 @@ class PageResult(BaseModel, Generic[T]):
     total: int
     page: int = 1
     size: int = 20
+    pages: int = 0
+    summary: dict[str, Any] | None = None
+    facets: dict[str, Any] | None = None
+    applied_filters: dict[str, Any] | None = None
+    note: str | None = None
 
 
 class ActionResult(BaseModel):
@@ -40,6 +45,44 @@ class RealtimemetricEntry(BaseModel):
     field_5: str | None = None  # 维度字段组
     field_6: str | None = None  # 延迟容忍毫秒
     field_7: str | None = None  # 精度位数
+
+
+class MetricWindowResult(BaseModel):
+    """窗口结果明细：窗口范围、聚合方式、维度、新鲜度与覆盖率均可追溯。"""
+
+    id: int | None = None
+    指标编号: str | None = None
+    指标名称: str | None = None
+    数据源流: str | None = None
+    计算窗口秒: int | None = None
+    聚合函数: str | None = None
+    维度字段组: str | None = None
+    窗口开始: str | None = None
+    窗口结束: str | None = None
+    窗口标识: str | None = None
+    重放截止时间: str | None = None
+    指标值: float | int | None = None
+    事件数: int | None = None
+    去重后事件数: int | None = None
+    预期事件数: int | None = None
+    覆盖率: float | None = None
+    覆盖率下限: float | None = None
+    覆盖率达标: bool | None = None
+    数据最新收到时间: str | None = None
+    数据新鲜度秒: int | None = None
+    新鲜度阈值秒: int | None = None
+    新鲜度状态: str | None = None
+    窗口状态: str | None = None
+    消费准入: bool | None = None
+    结果版本: int | None = None
+    结果指纹: str | None = None
+    计算批次: str | None = None
+    触发方式: str | None = None
+    维度明细: list[dict[str, Any]] = Field(default_factory=list)
+    定位信息: dict[str, Any] = Field(default_factory=dict)
+    版本流水: list[dict[str, Any]] = Field(default_factory=list)
+    大盘联动: list[dict[str, Any]] = Field(default_factory=list)
+    阈值联动: list[dict[str, Any]] = Field(default_factory=list)
 
 class DashboardEntry(BaseModel):
     """大盘配置明细结构。"""
